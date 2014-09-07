@@ -1,3 +1,5 @@
+require 'fileutils'
+
 class WebSpeak
   def tohtml(a)
     puts "building " + a + " into HTML"
@@ -51,12 +53,12 @@ class IndexPage
     end
 
     for i in 0..2# (IndexOptions[2][26].to_i - 1) 
-    #ArIndex.each do |b|
+    #InputFilesIndex.each do |b|
       #b.chomp(".txt")
-      HTML << "<a href='./Pages/#{ArIndex[i].chomp(".txt")}.html'>#{ArIndex[i].chomp(".txt")}</a>"
-      #shitfuck = ArIndex[i][0..-5]
+      HTML << "<a href='./Pages/#{InputFilesIndex[i].chomp(".txt")}.html'>#{InputFilesIndex[i].chomp(".txt")}</a>"
+      #shitfuck = InputFilesIndex[i][0..-5]
       #puts shitfuck
-      #HTML << "<a href='./Pages/#{ArIndex[i][0..-5]}.html'>#{ArIndex[i][0..-5]}</a>"	
+      #HTML << "<a href='./Pages/#{InputFilesIndex[i][0..-5]}.html'>#{InputFilesIndex[i][0..-5]}</a>"	
     end 
 
     out_HTML = File.new("Website/index.html", "w")
@@ -71,31 +73,24 @@ class IndexPage
   end
 end
 
-ArIndex = Dir.entries(Dir.pwd + "/Input").reject{|entry| entry == "." || entry == ".."}.sort
-#Arindex.delete_if {}
-#puts ArIndex.each { |a| print a, ", " }
+InputFilesIndex = Dir.entries(Dir.pwd + "/Input").reject{|entry| entry == "." || entry == ".."}.sort
 HTML = Array.new
 
-ArDir = ["Website", "Website/Pictures", "Website/Pages", "Website/Style"]
-ArDir.each {|x| if (Dir.exist?(x) == false) then Dir.mkdir(x) end}
+OutputDirectories = ["Website", "Website/Pictures", "Website/Pages", "Website/Style"]
+OutputDirectories.each {|x| if (Dir.exist?(x) == false) then Dir.mkdir(x) end}
 
-
-
-ArIndex.each do |a|
-	if a.include? "txt"
-	#--------------------------------------------------------------------
+InputFilesIndex.each do |a|
+	if a.include? ".txt"
     WebSpeak.new.tohtml(a)
-    #converter.tohtml(a)
-	#--------------------------------------------------------------------
+  elsif a.include? ".jpg" or a.include? ".png"
+    FileUtils.cp("Input/#{a}", "Website/Pictures/#{a}")
+	elsif a.include? ".md"
+		# call redcarpet markdown
   else
-		# call redcarpet markdown
-	#else
-		# call redcarpet markdown
+    puts "file #{a} not recognised, please look at supported file types"
 	end
 end
+
 puts "builds complete, making index"
 
-#--------------------------make the index page------------------------
 IndexPage.new.make
-
-
