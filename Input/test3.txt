@@ -1,0 +1,22 @@
+Header: My test Blog 3
+
+Hi everyone, this is my test blog. here is a picture of me:
+
+Picture: me.jpg
+
+I've written out some example code for you
+
+Code:
+If code==1
+	tab
+  double space
+end
+:Code
+
+also my favorite saying:
+
+Quote:
+hello, poo poo poo
+:Quote
+
+thanks and goodnight
