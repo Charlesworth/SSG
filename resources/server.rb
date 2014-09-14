@@ -1,7 +1,7 @@
 require 'sinatra'
 require 'launchy'
 
-Launchy.open("http://localhost:4567/test")
+Launchy.open("http://localhost:4567/Start")
 #open the init erb form
 #take in the answers to a txt file
 #close the page or put up a "website made, can be found in #{folder} folder
@@ -18,9 +18,14 @@ get '/hello' do
 	"Hello there :)"
 end
 
-get '/test' do
+get '/Start' do
 	A = "Hello, is it me your looking for?"
 	erb :test
+end
+
+get '/page_editor' do
+	A = "Hello, is it me your looking for?"
+	erb :page_editor
 end
 
 get '/hello/:name' do

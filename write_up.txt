@@ -1,0 +1,26 @@
+_________**Name**
+
+**Name** is a Static website generator; it takes your writing, gives you a couple of style and layout options and outputs a great looking websites. **Name** is simple for everyone to use, you don't need any web programming experience to use it. **Name** was made platform agnostic and free, so the website produced can be hosted where ever you want (we also have built in support for free hosting with the fantastic GitHub)
+
+Give it a spin!
+
+Do you have ruby? if not please install from www.rubylang.org
+
+next download **Name**, the program will show you the rest!
+
+_________WebSpeak, my simple mark-up language
+
+----------------
+What is a mark-up language and WebSpeak?
+Rather than writing your site in complex HTML, JavaScript and CSS code, you can use a mark-up language which uses simple tags and your written words. It is meant to add a layer of abstraction and simplicity to producing web content, rather than you having to learn to code.
+
+picture here markup -> HTML -> web
+
+WebSpeak is a simple mark-up language made for this site generator, I've made it to be very easy to use and quick to learn. **Name** also supports Markdown, the most popular mark-up language. Markdown has more functionality than WebSpeak but is a bit more to learn, so the choice is yours!
+
+----------------
+Using WebSpeak
+Webspeak uses simple tags in and around your text to add features to your page:
+
+show tag examples for Pics, Code, Quote, Title
+

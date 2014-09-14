@@ -6,28 +6,32 @@ class WebSpeak
     puts "building " + a + " into HTML"
            
     f = File.open("Input/#{a}", "r")
+		HTML << "<head>
+<link rel='stylesheet' type='text/css' href='../Style/style.css'>
+</head>
+<body>"
     f.each_line do |line|
       if line.start_with?("Picture:")
         line.slice!(0..8)
         HTML << "<br /><img src='../Pictures/" + line + "'alt='some_text'></img><br />"
       elsif line.start_with?("Code:")
-        HTML << "<br /><div style='background: darkgray; padding-left: 1em; color: green; font-family: monospace;'>"
+        HTML << "<br /><div id='code'>"
       elsif line.start_with?(":Code")
         HTML << "</div>"
       elsif line.start_with?("Quote:")
-        HTML << "<br /><div style='font-style: italic; padding-left: 1em;'>"
+        HTML << "<br /><div id='quote'>"
       elsif line.start_with?(":Quote")
         HTML << "</div>"	
       elsif line.start_with?("Header:")
         line.slice!(0..7)
-        HTML << "<h1 style='padding-left: 0.5em;'>" + line + "</h1>"
+        HTML << "<h1>" + line + "</h1>"
       elsif line == "\n"
         HTML << "<br />"
       else
         HTML << line
       end
     end
-      
+    HTML << "</body>"
     #put next post and index hyperlinks here
 
     output_file = File.new("Website/Pages/" + a.chomp(".txt") + ".html", "w")
@@ -46,7 +50,7 @@ class IndexPage
 	@@index_length
 	
   def make
-    file = File.open("Index_options.txt", "r")
+    file = File.open("resources/Index_options.txt", "r")
     @@index_options = file.readlines[0..2]
     if @@index_options[1].include?("Yes") #If display title = yes
       title = @@index_options[0].split(': ')[1]
@@ -100,9 +104,13 @@ IndexPage.new.make
 puts "index complete, website now finished!"
 #system 'ruby server.rb'
 
+FileUtils.cp("resources/style.css", "Website/Style/style.css")
+
 #for test only------------------------------------------------
 puts " "
 puts "------Files included in website:------"
 puts InputFilesIndex
 puts "-------------Pages made:--------------"
 puts Pages
+
+Launchy.open("Website/index.html")

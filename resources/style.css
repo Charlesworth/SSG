@@ -1,0 +1,28 @@
+title {
+
+}
+
+body {
+	background-color: white;
+}
+
+h1 {
+	padding-left: 0.5em;
+}
+
+img {
+
+}
+
+#code {
+	background: darkgray;
+	padding-left: 1em;
+	color: green;
+	font-family: monospace;
+}
+
+#quote {
+	font-style: italic;
+	padding-left: 1em;
+}
+
