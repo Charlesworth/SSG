@@ -1,4 +1,5 @@
 require 'fileutils'
+require 'launchy'
 
 class WebSpeak
   def tohtml(a)
@@ -8,7 +9,6 @@ class WebSpeak
     f.each_line do |line|
       if line.start_with?("Picture:")
         line.slice!(0..8)
-        #move picture into Out/Pictures 
         HTML << "<br /><img src='../Pictures/" + line + "'alt='some_text'></img><br />"
       elsif line.start_with?("Code:")
         HTML << "<br /><div style='background: darkgray; padding-left: 1em; color: green; font-family: monospace;'>"
@@ -30,67 +30,79 @@ class WebSpeak
       
     #put next post and index hyperlinks here
 
-    out_HTML = File.new("Website/Pages/" + a.chomp(".txt") + ".html", "w")
+    output_file = File.new("Website/Pages/" + a.chomp(".txt") + ".html", "w")
 
     HTML.each do |x|
-      out_HTML.puts x
+      output_file.puts x
     end
 
-    out_HTML.close
+    output_file.close
     HTML.clear
   end
 end
 
 class IndexPage
-  @@IndexOptions
-
+  @@index_options
+	@@index_length
+	
   def make
-    f = File.open("IndexOptions.txt", "r")
-    @@IndexOptions = f.readlines[0..2]
-    if @@IndexOptions[1].include?("Yes")
-      strg = @@IndexOptions[0].split(': ')[1]
-      HTML << "<h1 style='padding-left: 0.5em;'>" + strg + "</h1>"
+    file = File.open("Index_options.txt", "r")
+    @@index_options = file.readlines[0..2]
+    if @@index_options[1].include?("Yes") #If display title = yes
+      title = @@index_options[0].split(': ')[1]
+      HTML << "<h1 style='padding-left: 0.5em;'>" + title + "</h1>"
     end
-
-    for i in 0..2# (IndexOptions[2][26].to_i - 1) 
-    #InputFilesIndex.each do |b|
-      #b.chomp(".txt")
-      HTML << "<a href='./Pages/#{InputFilesIndex[i].chomp(".txt")}.html'>#{InputFilesIndex[i].chomp(".txt")}</a>"
-      #shitfuck = InputFilesIndex[i][0..-5]
-      #puts shitfuck
-      #HTML << "<a href='./Pages/#{InputFilesIndex[i][0..-5]}.html'>#{InputFilesIndex[i][0..-5]}</a>"	
+		
+		if (@@index_options[2][26].to_i > Pages.length)	
+			@@index_length = Pages.length
+		else
+			@@index_length = @@index_options[2][26].to_i
+		end
+		
+    for i in 0..(@@index_length - 1)
+      HTML << "<a href='./Pages/#{Pages[i]}.html'>#{Pages[i]}</a>"
     end 
 
-    out_HTML = File.new("Website/index.html", "w")
+    output_file = File.new("Website/index.html", "w")
 
     HTML.each do |x|
-      out_HTML.puts x + "<br />"
+      output_file.puts x + "<br />"
     end
 
-    out_HTML.close
+    output_file.close
     HTML.clear
-    puts "index complete, website now finished!"
   end
 end
 
+
 InputFilesIndex = Dir.entries(Dir.pwd + "/Input").reject{|entry| entry == "." || entry == ".."}.sort
 HTML = Array.new
+Pages = Array.new
 
 OutputDirectories = ["Website", "Website/Pictures", "Website/Pages", "Website/Style"]
 OutputDirectories.each {|x| if (Dir.exist?(x) == false) then Dir.mkdir(x) end}
 
-InputFilesIndex.each do |a|
-	if a.include? ".txt"
-    WebSpeak.new.tohtml(a)
-  elsif a.include? ".jpg" or a.include? ".png"
-    FileUtils.cp("Input/#{a}", "Website/Pictures/#{a}")
-	elsif a.include? ".md"
+InputFilesIndex.each do |current_file|
+	if current_file.include? ".txt"
+    WebSpeak.new.tohtml(current_file)
+		Pages << current_file.chomp(".txt")
+  elsif current_file.include? ".jpg" or current_file.include? ".png"
+    FileUtils.cp("Input/#{current_file}", "Website/Pictures/#{current_file}")
+	elsif current_file.include? ".md"
 		# call redcarpet markdown
   else
-    puts "file #{a} not recognised, please look at supported file types"
+    puts "file #{current_file} not recognised, please look at supported file types"
 	end
 end
 
 puts "builds complete, making index"
-
 IndexPage.new.make
+puts "index complete, website now finished!"
+#system 'ruby server.rb'
+
+#for test only------------------------------------------------
+puts " "
+puts "------Files included in website:------"
+puts InputFilesIndex
+puts "-------------Pages made:--------------"
+puts Pages
