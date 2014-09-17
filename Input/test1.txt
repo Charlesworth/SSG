@@ -1,6 +1,6 @@
 Header: My test Blog
 
-Hi everyone, this is my test blog. here is a picture of me:
+:tab: Hi everyone, this is my test blog. here is a picture of me:
 
 Picture: me.jpg
 
@@ -8,8 +8,8 @@ I've written out some example code for you
 
 Code:
 If code==1
-	tab
-  double space
+:tab:tab
+:tab::tab:double space
 end
 :Code
 

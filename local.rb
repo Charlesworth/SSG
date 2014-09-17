@@ -1,47 +1,47 @@
 require 'fileutils'
 require 'launchy'
+require 'erb'
 
 class WebSpeak
   def tohtml(a)
-    puts "building " + a + " into HTML"
+    puts "building " + a + " into a web page"
            
     f = File.open("Input/#{a}", "r")
-		HTML << "<head>
-<link rel='stylesheet' type='text/css' href='../Style/style.css'>
-</head>
-<body>"
+
     f.each_line do |line|
       if line.start_with?("Picture:")
         line.slice!(0..8)
-        HTML << "<br /><img src='../Pictures/" + line + "'alt='some_text'></img><br />"
+        Page_content << "<img src='../Pictures/" + line + "'alt='some_text'></img><br />"
       elsif line.start_with?("Code:")
-        HTML << "<br /><div id='code'>"
+        Page_content << "<div id='code'>"
       elsif line.start_with?(":Code")
-        HTML << "</div>"
+        Page_content << "</div>"
       elsif line.start_with?("Quote:")
-        HTML << "<br /><div id='quote'>"
+        Page_content << "<div id='quote'>"
       elsif line.start_with?(":Quote")
-        HTML << "</div>"	
+        Page_content << "</div>"	
       elsif line.start_with?("Header:")
         line.slice!(0..7)
-        HTML << "<h1>" + line + "</h1>"
+        Page_content << "<h1>" + line + "</h1>"
       elsif line == "\n"
-        HTML << "<br />"
+        Page_content << "<br />"
+      elsif line.start_with?(":tab:")
+        Page_content << "&nbsp;" * line.scan(/:tab:/).length
+        line.gsub!(":tab:", "")
+        Page_content << line
+        Page_content << "<br />"
       else
-        HTML << line
+        Page_content << line
+        Page_content << "<br />"
       end
     end
-    HTML << "</body>"
-    #put next post and index hyperlinks here
 
+    erb = ERB.new(File.read('resources/views/standard_page.erb'))
     output_file = File.new("Website/Pages/" + a.chomp(".txt") + ".html", "w")
-
-    HTML.each do |x|
-      output_file.puts x
-    end
-
+    output_file.puts erb.result()
     output_file.close
-    HTML.clear
+    
+    Page_content.clear
   end
 end
 
@@ -82,6 +82,7 @@ end
 InputFilesIndex = Dir.entries(Dir.pwd + "/Input").reject{|entry| entry == "." || entry == ".."}.sort
 HTML = Array.new
 Pages = Array.new
+Page_content = String.new
 
 OutputDirectories = ["Website", "Website/Pictures", "Website/Pages", "Website/Style"]
 OutputDirectories.each {|x| if (Dir.exist?(x) == false) then Dir.mkdir(x) end}
