@@ -1,3 +1,4 @@
+Date: 10/05/13
 Header: My test Blog 3
 
 Hi everyone, this is my test blog. here is a picture of me:

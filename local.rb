@@ -3,43 +3,53 @@ require 'launchy'
 require 'erb'
 
 class WebSpeak
+  @@date = Time.new
   def tohtml(a)
     puts "building " + a + " into a web page"
            
     f = File.open("Input/#{a}", "r")
 
+    @@date = "No date given"
+    
     f.each_line do |line|
       if line.start_with?("Picture:")
         line.slice!(0..8)
         Page_content << "<img src='../Pictures/" + line + "'alt='some_text'></img><br />"
       elsif line.start_with?("Code:")
-        Page_content << "<div id='code'>"
+        Page_content << "<code>"#"<div id='code'>"
       elsif line.start_with?(":Code")
-        Page_content << "</div>"
+        Page_content << "</code>"#"</div>"
       elsif line.start_with?("Quote:")
-        Page_content << "<div id='quote'>"
+        Page_content << "<blockquote>"#"<div id='quote'>"
       elsif line.start_with?(":Quote")
-        Page_content << "</div>"	
+        Page_content << "</blockquote>"#"</div>"	
       elsif line.start_with?("Header:")
         line.slice!(0..7)
-        Page_content << "<h1>" + line + "</h1>"
+        Page_content << "<h3>" + line + "</h3>"
       elsif line == "\n"
         Page_content << "<br />"
       elsif line.start_with?(":tab:")
-        Page_content << "&nbsp;" * line.scan(/:tab:/).length
+        Page_content << "&nbsp;&nbsp;&nbsp;" * line.scan(/:tab:/).length
         line.gsub!(":tab:", "")
         Page_content << line
         Page_content << "<br />"
+      elsif line.start_with?("Date:")
+        line.slice!(0..5)
+        line.slice!(8..9)
+        puts "Incorect date format detected in file " + a + ", please use 'Date: DD/MM/YY'" if line.length != 8 
+        @@date = line
       else
         Page_content << line
         Page_content << "<br />"
       end
     end
 
-    erb = ERB.new(File.read('resources/views/standard_page.erb'))
+    erb = ERB.new(File.read('resources/views/page_template.erb'))
     output_file = File.new("Website/Pages/" + a.chomp(".txt") + ".html", "w")
     output_file.puts erb.result()
     output_file.close
+    
+    Page_date[@@date] = a.chomp(".txt")
     
     Page_content.clear
   end
@@ -78,19 +88,19 @@ class IndexPage
   end
 end
 
-
 InputFilesIndex = Dir.entries(Dir.pwd + "/Input").reject{|entry| entry == "." || entry == ".."}.sort
 HTML = Array.new
 Pages = Array.new
 Page_content = String.new
+Page_date = Hash.new
 
 OutputDirectories = ["Website", "Website/Pictures", "Website/Pages", "Website/Style"]
 OutputDirectories.each {|x| if (Dir.exist?(x) == false) then Dir.mkdir(x) end}
 
 InputFilesIndex.each do |current_file|
 	if current_file.include? ".txt"
+    Pages << current_file.chomp(".txt")
     WebSpeak.new.tohtml(current_file)
-		Pages << current_file.chomp(".txt")
   elsif current_file.include? ".jpg" or current_file.include? ".png"
     FileUtils.cp("Input/#{current_file}", "Website/Pictures/#{current_file}")
 	elsif current_file.include? ".md"
@@ -112,6 +122,6 @@ puts " "
 puts "------Files included in website:------"
 puts InputFilesIndex
 puts "-------------Pages made:--------------"
-puts Pages
+puts Page_date.sort
 
 Launchy.open("Website/index.html")
