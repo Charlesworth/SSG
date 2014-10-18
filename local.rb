@@ -2,6 +2,8 @@ require 'fileutils'
 require 'launchy'
 require 'erb'
 
+IDate = Time.new
+
 class WebSpeak
   @@date = Time.new
   def tohtml(a)
@@ -44,12 +46,12 @@ class WebSpeak
       end
     end
 
+    Page_date[@@date] = a.chomp(".txt")		
+		
     erb = ERB.new(File.read('resources/views/page_template.erb'))
     output_file = File.new("Website/Pages/" + a.chomp(".txt") + ".html", "w")
     output_file.puts erb.result()
     output_file.close
-    
-    Page_date[@@date] = a.chomp(".txt")
     
     Page_content.clear
   end

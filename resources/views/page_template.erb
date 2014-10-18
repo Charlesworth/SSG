@@ -6,13 +6,13 @@
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
 
-    <title>Sticky Footer Navbar Template for Bootstrap</title>
+    <title>need a title here</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="../Style/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../Style/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="../Style/css/sticky-footer-navbar.css" rel="stylesheet">
+    <link href="../Style/sticky-footer-navbar.css" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -37,7 +37,7 @@
         </div>
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav" style="float: right;">
-            <li class="active"><a href="#Home">Home</a></li>
+            <li class="active"><a href="../index.html">Home</a></li>
             <li><a href="#next">Next</a></li>
             <li><a href="#previous">Previous</a></li>
           </ul>
@@ -54,7 +54,7 @@
     <!-- Begin page content -->
     <div class="container">
       <div class="page-header">
-        <h1><%= Pages.last %></h1>
+        <h1><%= Pages.last %> : <%= Page_date.to_a.last.to_s.slice!(2..9) %></h1>
       </div>
       <p class="lead"> <%= Page_content %> <!-- <code>padding-top: 60px;</code> on the <code>body &gt; .container</code>. --></p>
     </div>
@@ -69,7 +69,7 @@
     
     <div class="footer">
       <div class="container">
-              <p class="text-muted">Built using <a href="http://gcharlescochrane.com">namehere</a> SSG <a href="http://getbootstrap.com">Bootstrap</a>.<a href="#" style="float: right;">Back to top</a></p>
+              <p class="text-muted">Built using <a href="http://charlescochrane.com">namehere</a> SSG <a href="http://getbootstrap.com">Bootstrap</a>.<a href="#" style="float: right;">Back to top</a></p>
         <p>
         
       </div>
