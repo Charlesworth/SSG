@@ -94,10 +94,11 @@ Page_content = String.new
 Page_date = Hash.new
 #Blog_title = String.new
 
-Output_directories = ["Website", "Website/Pictures", "Website/Pages", "Website/Style"]
+Output_directories = ["Website", "Website/Pictures", "Website/Pages", "Website/Style", "Website/Style/js", "Website/Style/css"]
 Output_directories.each {|x| if (Dir.exist?(x) == false) then Dir.mkdir(x) end}
-Style_import = ["bootstrap.min.css", "sticky-footer-navbar.css"]
-Style_import.each {|y| FileUtils.cp("resources/Style/css/#{y}", "Website/Style/#{y}")}
+Style_import = ["css/bootstrap.min.css", "css/sticky-footer-navbar.css","js/bootstrap.min.js"]
+Style_import.each {|y| FileUtils.cp("resources/Style/#{y}", "Website/Style/#{y}")}
+#FileUtils.cp_r("resources/Style/js","Website/Style")
 
 #------------------
 file = File.open("resources/Index_options.txt", "r")
