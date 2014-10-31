@@ -126,7 +126,7 @@ IndexPage.new.make
 puts "index complete, website now finished!"
 #system 'ruby server.rb'
 
-FileUtils.cp("resources/style.css", "Website/Style/style.css")
+#FileUtils.cp("resources/style.css", "Website/Style/style.css")
 
 #for test only------------------------------------------------
 puts " "
@@ -136,3 +136,4 @@ puts "-------------Pages made:--------------"
 puts Page_date.sort
 
 Launchy.open("Website/index.html")
+# Don't forget to package me with OCRA at the end!!!!

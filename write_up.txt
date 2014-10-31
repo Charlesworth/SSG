@@ -12,15 +12,59 @@ _________WebSpeak, my simple mark-up language
 
 ----------------
 What is a mark-up language and WebSpeak?
-Rather than writing your site in complex HTML, JavaScript and CSS code, you can use a mark-up language which uses simple tags and your written words. It is meant to add a layer of abstraction and simplicity to producing web content, rather than you having to learn to code.
+Rather than writing your website in complex code, using mark-up language your written words with some simple tags. It is meant to add a layer of abstraction and simplicity to producing web content, rather than you having to learn programming.
 
 picture here markup -> HTML -> web
 
-WebSpeak is a simple mark-up language made for this site generator, I've made it to be very easy to use and quick to learn. **Name** also supports Markdown, the most popular mark-up language. Markdown has more functionality than WebSpeak but is a bit more to learn, so the choice is yours!
+WebSpeak is a simple mark-up language made for this site generator, we have made it to be very easy to use and quick to learn. 
+
+
+**Name** also supports Markdown, the most popular mark-up language. Markdown has more functionality than WebSpeak but is a bit more to learn, so the choice is yours!
 
 ----------------
 Using WebSpeak
-Webspeak uses simple tags in and around your text to add features to your page:
+The Webspeak mark-up language uses simple tags in and around your text to tell **namehere** how you want your website to look.
+
+Each page starts with a date for the first line:
+Date: 25/12/14
+
+After that its up to you
+
+Features:
+
+Header:
+This makes the line proceeding the tag a header, increasing the size and thickness of the text.
+
+Picture:
+This adds a .JPEG or .PNG image to the page, as long as that image is located in the Input directory. E.g. "Image: me.jpg" would insert the me.jpg image from the input folder into the page.
+
+Quote: :Quote
+Anything between the quote tags (Quote: this area :Quote) is formatted as a quote sample. For example "Quote: To be or not to be :Quote" would look like
+
+Code: :Code
+Same as above, but formatted as a code sample
+
+:tab:
+Adds a tab space in its location, for example:
+
+Text Formatting:
+
+<u> </u>
+
+<b> </b>
+
+<i> </i>
+
+please refer to this list for more text formatting options: http://www.w3schools.com/html/html_formatting.asp
 
 show tag examples for Pics, Code, Quote, Title
+show examples of underline, bold, italics
+------------
+Themes
 
+**namehere** is built with bootstrap, meaning you can choose from loads of lovely themes and styles for your website. http://bootswatch.com/
+
+------------
+Hosting
+
+use nearlyfreespeak.net if you arn't scared of a bit of technical babble, but for everyone else, github pages is a lovely and free way of putting your site on the world wide web.
